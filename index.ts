@@ -1,6 +1,7 @@
 import { spawn, spawnSync } from 'child_process';
 
-const BRANCH = 'dev-sam-auto-bumper';
+const MAIN_BRANCH = 'main';
+const NEW_BRANCH = 'dev-sam-auto-bumper';
 const COMMIT_MESSAGE = '[bot] Automatically bump dependencies';
 
 import { Octokit } from '@octokit/rest';
@@ -26,15 +27,15 @@ const main = async () => {
     console.error('Nothing to bump!');
     return;
   }
-  await runCommand('git', 'config', '--global', 'user.name', 'Sam');
-  await runCommand('git', 'config', '--global', 'user.email', 'sam@developersam.com');
+  await runCommand('git', 'config', '--global', 'user.name', 'dev-sam-bot');
+  await runCommand('git', 'config', '--global', 'user.email', 'bot@developersam.com');
   await runCommand('git', 'add', '.');
   await runCommand('git', 'fetch', '--all');
-  await runCommand('git', 'checkout', 'master');
-  await runCommand('git', 'checkout', '-b', BRANCH);
+  await runCommand('git', 'checkout', MAIN_BRANCH);
+  await runCommand('git', 'checkout', '-b', NEW_BRANCH);
   if (await runCommand('git', 'commit', '-m', COMMIT_MESSAGE)) {
-    if (await runCommand('git', 'push', '-f', 'origin', BRANCH)) {
-      await runCommand('git', 'push', '-f', '--set-upstream', 'origin', BRANCH);
+    if (await runCommand('git', 'push', '-f', 'origin', NEW_BRANCH)) {
+      await runCommand('git', 'push', '-f', '--set-upstream', 'origin', NEW_BRANCH);
     }
   }
   const octokit = new Octokit({
@@ -47,7 +48,13 @@ const main = async () => {
     (pr) => pr.title === COMMIT_MESSAGE
   );
   if (existingPR == null) {
-    await octokit.pulls.create({ owner, repo, title: COMMIT_MESSAGE, base: 'main', head: BRANCH });
+    await octokit.pulls.create({
+      owner,
+      repo,
+      title: COMMIT_MESSAGE,
+      base: MAIN_BRANCH,
+      head: NEW_BRANCH,
+    });
   } else {
     await octokit.pulls.update({ owner, repo, pull_number: existingPR.number });
   }
