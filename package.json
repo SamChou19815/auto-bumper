@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "bundle": "esbuild index.ts --platform=node --bundle --outfile=index.js --minify \"--banner:js=#!/usr/bin/env node\"",
-    "bump": "exit 0"
+    "bump": "yarn add ts-node"
   },
   "dependencies": {
     "@octokit/rest": "^18.5.3",
