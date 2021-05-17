@@ -1,0 +1,5 @@
+name: 'auto-bumper'
+description: 'Run yarn bump to automatically bump your pre-defined list of dependencies.'
+runs:
+  using: 'node12'
+  main: 'index.js'
