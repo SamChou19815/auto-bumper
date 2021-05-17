@@ -1,8 +1,8 @@
 import { spawn, spawnSync } from 'child_process';
 
-const MAIN_BRANCH = 'main';
-const NEW_BRANCH = 'dev-sam-auto-bumper';
-const COMMIT_MESSAGE = '[bot] Automatically bump dependencies';
+const MAIN_BRANCH = process.env.MAIN_BRANCH || 'main';
+const NEW_BRANCH = process.env.NEW_BRANCH || 'dev-sam-auto-bumper';
+const COMMIT_MESSAGE = process.env.COMMIT_MESSAGE || '[bot] Automatically bump dependencies';
 
 import { Octokit } from '@octokit/rest';
 
