@@ -1,0 +1,16 @@
+{
+  "name": "auto-bumper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "bundle": "esbuild index.ts --platform=node --bundle --outfile=index.js --minify \"--banner:js=#!/usr/bin/env node\"",
+    "bump": "exit 0"
+  },
+  "dependencies": {
+    "@octokit/rest": "^18.5.3",
+    "@types/node": "^15.3.0",
+    "esbuild": "^0.11.23",
+    "typescript": "^4.2.4"
+  }
+}
