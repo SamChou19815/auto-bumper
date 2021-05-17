@@ -26,6 +26,8 @@ const main = async () => {
     console.error('Nothing to bump!');
     return;
   }
+  await runCommand('git', 'config', '--global', 'user.name', 'Sam');
+  await runCommand('git', 'config', '--global', 'user.email', 'sam@developersam.com');
   await runCommand('git', 'add', '.');
   await runCommand('git', 'fetch', '--all');
   await runCommand('git', 'checkout', 'master');
