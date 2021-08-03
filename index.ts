@@ -11,16 +11,16 @@ const hasChanges = () =>
     .stdout.toString()
     .trim() !== '';
 
-const runCommand = (program: string, ...programArguments: readonly string[]) => {
+function runCommand(program: string, ...programArguments: readonly string[]) {
   const programArgumentsQuoted = programArguments
     .map((it) => (it.includes(' ') ? `"${it}"` : it))
     .join(' ');
   console.log(`> ${program} ${programArgumentsQuoted}`);
   const process = spawn(program, programArguments, { stdio: 'inherit' });
   return new Promise<boolean>((resolve) => process.on('exit', (status) => resolve(status === 0)));
-};
+}
 
-const main = async () => {
+async function main() {
   await runCommand('yarn');
   if (!(await runCommand('yarn', 'bump'))) throw new Error('Failed to bump.');
   if (!hasChanges()) {
@@ -58,6 +58,6 @@ const main = async () => {
   } else {
     await octokit.pulls.update({ owner, repo, pull_number: existingPR.number });
   }
-};
+}
 
 main().catch((e) => console.error(e));
