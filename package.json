@@ -4,13 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "bundle": "esbuild index.ts --platform=node --bundle --outfile=index.js --minify \"--banner:js=#!/usr/bin/env node\"",
+    "bundle": "esbuild index.ts --platform=node --bundle --outfile=index.js \"--banner:js=#!/usr/bin/env node\"",
     "bump": "exit 0"
   },
   "dependencies": {
-    "@octokit/rest": "^18.9.0",
-    "@types/node": "^16.4.12",
-    "esbuild": "^0.12.17",
-    "typescript": "^4.3.5"
+    "@octokit/rest": "^18.9.1",
+    "@types/node": "^16.7.3",
+    "esbuild": "^0.12.24",
+    "typescript": "^4.4.2"
   }
 }
